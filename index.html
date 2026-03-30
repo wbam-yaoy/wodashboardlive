@@ -328,9 +328,13 @@ th.admin-drag .col-drag-handle{display:inline-block}
   </div>
   <div class="hdr-right">
     <div class="hdr-info" id="hdr-info">1,251 work orders</div>
-    <button type="button" class="btn-up" id="btn-open" title="Reload live data from Google Sheets">
+    <button type="button" class="btn-up" id="btn-refresh" title="Reload live data from Google Sheets">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
       Refresh Data
+    </button>
+    <button type="button" class="btn-up" id="btn-open" title="Open admin tools">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0A1.65 1.65 0 0 0 10.5 3.1V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Admin
     </button>
   </div>
 </div>
@@ -489,7 +493,7 @@ th.admin-drag .col-drag-handle{display:inline-block}
   <div class="pm-phdr">
     <div>
       <div class="pm-ptitle">PM Meeting Questions</div>
-      <div class="pm-psub">Auto-generated from live data &nbsp;&middot;&nbsp; Admin only</div>
+      <div class="pm-psub">Auto-generated from live filtered data &nbsp;&middot;&nbsp; Admin only</div>
     </div>
     <div class="pm-pactions">
       <button type="button" class="pm-btn-print" id="pm-btn-print">
@@ -503,7 +507,7 @@ th.admin-drag .col-drag-handle{display:inline-block}
     </div>
   </div>
   <div class="pm-sec">
-    <div class="pm-sec-title">Auto-generated &mdash; based on current portfolio data</div>
+    <div class="pm-sec-title">Auto-generated &mdash; based on the current filtered view</div>
     <div id="pm-auto-list"></div>
   </div>
   <div class="pm-sec">
@@ -543,7 +547,7 @@ th.admin-drag .col-drag-handle{display:inline-block}
     </div>
     <div class="mbdy">
       <div class="step on" id="s-auth">
-        <p style="font-size:12px;color:var(--ink2);margin-bottom:13px">Enter the admin password to access the upload panel.</p>
+        <p style="font-size:12px;color:var(--ink2);margin-bottom:13px">Enter the admin password to access admin tools, including uploads and PM Questions.</p>
         <div class="fg">
           <label class="fl">Admin Password</label>
           <input type="password" class="fi" id="pw" placeholder="Enter password" autocomplete="current-password">
@@ -866,7 +870,8 @@ function showRefreshBanner() {
 
 // ═══ WIRE ═══
 function wire(){
-  document.getElementById('btn-open').addEventListener('click',function(){showLoadingState();fetchSheetData();});
+  document.getElementById('btn-refresh').addEventListener('click',function(){showLoadingState();fetchSheetData();});
+  document.getElementById('btn-open').addEventListener('click',function(){openModal();});
   document.getElementById('btn-clear').addEventListener('click',function(){showLoadingState();fetchSheetData();});
   document.getElementById('btn-rst').addEventListener('click',resetFilters);
   document.getElementById('srch').addEventListener('input',function(){srchStr=this.value.trim();pg=0;applyFilters();});
@@ -1009,7 +1014,7 @@ function applyFilters(){
     return true;
   });
   document.getElementById('fcnt').textContent=fil.length+' of '+A.length+' WOs';
-  pg=0;updKPIs();updCharts();rendTable();
+  pg=0;updKPIs();updCharts();rendTable();refreshAutoQs();
 }
 function resetFilters(){
   ['f-div','f-cat','f-sts'].forEach(function(id){document.getElementById(id).value='';});
@@ -1214,7 +1219,7 @@ function closeModal(){
 function showStep(n){
   curStep=n;
   ['auth','up','res'].forEach(function(s){var el=document.getElementById('s-'+s);if(el)el.classList.toggle('on',s===n);});
-  var T={auth:'Admin \u2014 Upload Data',up:'Upload New Dataset',res:'Upload Complete'};
+  var T={auth:'Admin Access',up:'Admin Tools — Upload Dataset',res:'Upload Complete'};
   document.getElementById('mtit').textContent=T[n]||'';
   var fa=document.getElementById('mact'),fc=document.getElementById('mcnl');
   if(n==='auth'){fc.style.display='';fa.textContent='Continue \u2192';fa.disabled=false;}
@@ -1628,8 +1633,196 @@ function resetColOrder() {
 
 // ═══ PM QUESTIONS ═══
 var PM_SK = 'mfwo_pm_questions';
-var AUTO_QS = [{"id":"a1","category":"High Spend \u00b7 Vendor Concentration","theme":"red","q":"JD Renovation & Maintenance billed $254,424 across 434 WOs \u2014 30.3% of total portfolio spend from a single vendor. When was the last competitive rebid on their rates? What prevents splitting this volume between two vendors to create real pricing pressure?","data":"JD Renovation: $254,424 \u00b7 434 WOs \u00b7 30.3% of $839,203 total"},{"id":"a2","category":"High Spend \u00b7 Single WO Outliers","theme":"red","q":"Three Dallas WOs exceeded $13,000 each: sewer line replacement ($21,300), foundation lift ($14,750), and flood renovation ($13,416), all via JD Renovation. Were engineering assessments or competitive bids obtained before authorizing each? What caused the flood that triggered the $13,416 renovation?","data":"Largest WO: $21,300 \u00b7 Sewer replacement \u00b7 Dallas / Yanfu-Dallas"},{"id":"a3","category":"High Spend \u00b7 Incurred POs Unreconciled","theme":"red","q":"359 POs totaling $204,398 are in Incurred status \u2014 spend recognized but invoices not yet matched. Who reviews this aging list and how often? What controls confirm every incurred PO reflects work actually completed and inspected?","data":"Incurred: 359 POs \u00b7 $204,398 \u00b7 28.7% of total spend unreconciled"},{"id":"a4","category":"Repeat Issues \u00b7 Chronic Addresses","theme":"amber","q":"Five Dallas addresses each generated 8\u201311 work orders, with 2301 and 2409 Carril Al Lago Drive topping at 11 WOs each. Has anyone evaluated whether cumulative repair costs justify a capital rehab decision, lease restructuring, or non-renewal on these units?","data":"2301 Carril Al Lago: 11 WOs \u00b7 2409 Carril Al Lago: 11 WOs \u00b7 2553 Carril Al Lago: 10 WOs"},{"id":"a5","category":"Slow Completions \u00b7 Resident Impact","theme":"amber","q":"67 work orders took more than 30 days to close, with two Dallas units open for 230\u2013231 days. What caused those extreme delays \u2014 vendor availability, parts, or access? Are residents being communicated with and offered concessions when repairs exceed 30 days?","data":"67 WOs >30 days \u00b7 Longest: 231 days (Dallas make-ready) \u00b7 230 days (Dallas occupied unit)"},{"id":"a6","category":"Preventive Maintenance \u00b7 Root Cause","theme":"amber","q":"Foundation work, sewer replacement, and flood renovations were all reactive and high-cost. Is there a preventive inspection schedule for high-risk systems that could catch these before they become $10K+ emergencies? Who owns that calendar?","data":"Foundation: $14,750 + $12,170 \u00b7 Sewer line: $21,300 \u00b7 Flood renovation: $13,416"},{"id":"a7","category":"Internalization \u00b7 Make-Ready Spend","theme":"teal","q":"Zavala billed $171,577 and Prestige $122,310 \u2014 primarily make-ready and cleaning. What portion of this could be handled by in-house staff? What is the specific barrier \u2014 headcount, skills, scheduling, or authorization?","data":"Zavala: $171,577 (20.4%) \u00b7 Prestige: $122,310 (14.6%) \u00b7 Combined: ~$294K (35% of spend)"},{"id":"a8","category":"Division Benchmarking \u00b7 Cost Per WO","theme":"teal","q":"Austin averages $1,007 per WO \u2014 the highest in the portfolio despite only 12 WOs. Is this driven by repair types or vendor pricing? What benchmarks exist to evaluate Austin vendor rates against local market rates?","data":"Austin: $1,007/WO \u00b7 Dallas: $565/WO \u00b7 N. Houston: $722/WO \u00b7 S. Houston: $837/WO"},{"id":"a9","category":"Vendor Pricing \u00b7 Appliances","theme":"teal","q":"Appliance replacements occur across all four divisions with no evidence of portfolio-wide bulk pricing. Are we buying at retail, or is there a supply agreement? What would total annual appliance spend look like negotiated at the portfolio level?","data":"Factory Builder Stores: active in all 4 divisions \u00b7 No bulk pricing or supply contract visible"},{"id":"a10","category":"Process \u00b7 Charge-Back Recovery","theme":"blue","q":"Across 1,251 work orders, not a single resident charge-back is recorded \u2014 yet many make-readies describe carpet replacement, TV-mount drywall damage, pet damage, and mold treatment. Is the charge-back process consistently applied at move-out and tracked as a revenue recovery line?","data":"0 of 1,251 WOs show resident charge-back \u00b7 Est. 40+ WOs with resident-damage language"}];
+var AUTO_QS = [];
 var customQs = [];
+
+function pmMoney(v){return '$'+Math.round(v||0).toLocaleString();}
+function pmPct(part,total){return total>0?((part/total)*100).toFixed(1):'0.0';}
+function pmDays(v){return (Math.floor((Number(v)||0)*10)/10).toFixed(1);}
+function pmNum(v){return Math.round(v||0).toLocaleString();}
+function pmTitleCase(s){return (s||'').toString().trim()||'Unknown';}
+
+function refreshAutoQs() {
+  AUTO_QS = generateAutoQs(fil && fil.length ? fil : []);
+  renderAutoQs();
+}
+
+function generateAutoQs(data) {
+  if(!data || !data.length) return [];
+
+  var totalSpend = 0, incurredSpend = 0, incurredCount = 0, sameDayCount = 0;
+  var validDays = [];
+  var vendorAgg = {}, communityAgg = {}, categoryAgg = {}, divisionAgg = {}, addressAgg = {}, slowWOs = [];
+
+  data.forEach(function(r){
+    var amt = Number(r['PO Total Amount'] || 0);
+    var days = Number(r.days_to_complete);
+    var division = r.division || 'Unknown';
+    var vendor = pmTitleCase(r.Vendor);
+    var community = pmTitleCase(r['Wo Community']);
+    var category = pmTitleCase(r['Select Location'] || 'Other');
+    var address = pmTitleCase(r.Address || 'Unknown');
+
+    totalSpend += amt;
+    vendorAgg[vendor] = vendorAgg[vendor] || {spend:0,count:0};
+    vendorAgg[vendor].spend += amt;
+    vendorAgg[vendor].count += 1;
+
+    communityAgg[community] = communityAgg[community] || {spend:0,count:0};
+    communityAgg[community].spend += amt;
+    communityAgg[community].count += 1;
+
+    categoryAgg[category] = categoryAgg[category] || {spend:0,count:0};
+    categoryAgg[category].spend += amt;
+    categoryAgg[category].count += 1;
+
+    divisionAgg[division] = divisionAgg[division] || {spend:0,count:0};
+    divisionAgg[division].spend += amt;
+    divisionAgg[division].count += 1;
+
+    addressAgg[address] = addressAgg[address] || {spend:0,count:0};
+    addressAgg[address].spend += amt;
+    addressAgg[address].count += 1;
+
+    if(r['PO Status'] === 'Incurred'){ incurredSpend += amt; incurredCount += 1; }
+
+    if(r.days_to_complete !== null && r.days_to_complete !== undefined && r.days_to_complete !== '' && !isNaN(days)) {
+      validDays.push(days);
+      if(days === 0) sameDayCount += 1;
+      if(days > 30) slowWOs.push(r);
+    }
+  });
+
+  var vendors = Object.entries(vendorAgg).sort(function(a,b){ return b[1].spend - a[1].spend; });
+  var communities = Object.entries(communityAgg).sort(function(a,b){ return b[1].spend - a[1].spend; });
+  var categories = Object.entries(categoryAgg).sort(function(a,b){ return b[1].count - a[1].count; });
+  var divisions = Object.entries(divisionAgg).map(function(x){
+    return {
+      name: x[0],
+      spend: x[1].spend,
+      count: x[1].count,
+      avg: x[1].count ? x[1].spend / x[1].count : 0
+    };
+  }).sort(function(a,b){ return b.avg - a.avg; });
+  var addresses = Object.entries(addressAgg).sort(function(a,b){
+    if(b[1].count !== a[1].count) return b[1].count - a[1].count;
+    return b[1].spend - a[1].spend;
+  });
+
+  var largestWO = data.slice().sort(function(a,b){ return (b['PO Total Amount']||0) - (a['PO Total Amount']||0); })[0];
+  var slowestWO = slowWOs.length ? slowWOs.slice().sort(function(a,b){ return (b.days_to_complete||0) - (a.days_to_complete||0); })[0] : null;
+
+  var questions = [];
+
+  if(vendors.length) {
+    var topVendor = vendors[0];
+    questions.push({
+      id:'a1',
+      category:'High Spend · Vendor Concentration',
+      theme:'red',
+      q: topVendor[0]+' accounts for '+pmMoney(topVendor[1].spend)+' across '+pmNum(topVendor[1].count)+' work orders — '+pmPct(topVendor[1].spend,totalSpend)+'% of spend in the current view. When were this vendor’s rates last benchmarked or rebid, and what volume could be shifted to create pricing leverage?',
+      data: topVendor[0]+': '+pmMoney(topVendor[1].spend)+' · '+pmNum(topVendor[1].count)+' WOs · '+pmPct(topVendor[1].spend,totalSpend)+'% of spend'
+    });
+  }
+
+  if(largestWO) {
+    questions.push({
+      id:'a2',
+      category:'High Spend · Single Work Order Outlier',
+      theme:'red',
+      q: 'The largest work order in the current view is '+pmMoney(largestWO['PO Total Amount']||0)+' for '+pmTitleCase(largestWO['Select Location']||'Uncategorized')+' at '+pmTitleCase(largestWO.Address||largestWO['Wo Community']||'Unknown location')+'. What approvals, scope validation, and competing quotes supported this spend?',
+      data: pmTitleCase(largestWO.division||'Unknown')+' · '+pmTitleCase(largestWO.Vendor||'Unknown vendor')+' · '+pmMoney(largestWO['PO Total Amount']||0)
+    });
+  }
+
+  questions.push({
+    id:'a3',
+    category:'Cash Flow · Incurred Not Yet Paid',
+    theme:'red',
+    q: pmNum(incurredCount)+' work orders totaling '+pmMoney(incurredSpend)+' are still marked Incurred in the current view. Who owns the aging review, and how do we confirm each incurred PO reflects completed and verified work?',
+    data: 'Incurred: '+pmNum(incurredCount)+' WOs · '+pmMoney(incurredSpend)+' · '+pmPct(incurredSpend,totalSpend)+'% of spend'
+  });
+
+  if(addresses.length) {
+    var addr = addresses[0];
+    questions.push({
+      id:'a4',
+      category:'Repeat Issues · Chronic Address',
+      theme:'amber',
+      q: pmTitleCase(addr[0])+' has generated '+pmNum(addr[1].count)+' work orders and '+pmMoney(addr[1].spend)+' of spend in the current view. Is this location a repeat-repair candidate for root-cause investigation, capital replacement, or a resident-use issue?',
+      data: pmTitleCase(addr[0])+' · '+pmNum(addr[1].count)+' WOs · '+pmMoney(addr[1].spend)
+    });
+  }
+
+  if(slowestWO) {
+    questions.push({
+      id:'a5',
+      category:'Resident Experience · Slow Closures',
+      theme:'amber',
+      q: pmNum(slowWOs.length)+' work orders took more than 30 days to close, and the longest took '+pmDays(slowestWO.days_to_complete)+' days. What drove the delay — access, parts, scope growth, or vendor responsiveness — and how are resident communications being handled for long-duration repairs?',
+      data: 'Longest close: '+pmDays(slowestWO.days_to_complete)+' days · '+pmTitleCase(slowestWO.Address||slowestWO['Wo Community']||'Unknown')
+    });
+  } else {
+    questions.push({
+      id:'a5',
+      category:'Resident Experience · Closure Speed',
+      theme:'amber',
+      q: 'No work orders in the current view exceed 30 days to close. What process controls are keeping cycle times low, and which of those practices should be standardized across the broader portfolio?',
+      data: 'Long-duration WOs (>30 days): 0'
+    });
+  }
+
+  if(categories.length) {
+    var cat = categories[0];
+    questions.push({
+      id:'a6',
+      category:'Operations · Most Frequent Work Type',
+      theme:'amber',
+      q: pmTitleCase(cat[0])+' is the most frequent category with '+pmNum(cat[1].count)+' work orders in the current view. Are these events mostly recurring symptoms of the same root cause, and where can preventive maintenance reduce future volume?',
+      data: pmTitleCase(cat[0])+' · '+pmNum(cat[1].count)+' WOs · '+pmMoney(cat[1].spend)+' spend'
+    });
+  }
+
+  if(divisions.length) {
+    var div = divisions[0];
+    questions.push({
+      id:'a7',
+      category:'Division Benchmarking · Cost per Work Order',
+      theme:'teal',
+      q: div.name+' has the highest average cost per work order at '+pmMoney(div.avg)+' in the current view. Is that driven by repair mix, vendor pricing, or approval discipline, and what benchmark should management use to judge whether this is reasonable?',
+      data: div.name+' · '+pmMoney(div.avg)+' avg / WO · '+pmNum(div.count)+' WOs'
+    });
+  }
+
+  if(communities.length) {
+    var comm = communities[0];
+    questions.push({
+      id:'a8',
+      category:'Community Concentration · Spend Exposure',
+      theme:'teal',
+      q: pmTitleCase(comm[0])+' represents '+pmMoney(comm[1].spend)+' across '+pmNum(comm[1].count)+' work orders in the current view. Does this indicate a normal operating pattern, a turn/make-ready cluster, or an emerging asset-level issue that needs direct intervention?',
+      data: pmTitleCase(comm[0])+' · '+pmMoney(comm[1].spend)+' · '+pmNum(comm[1].count)+' WOs'
+    });
+  }
+
+  questions.push({
+    id:'a9',
+    category:'Process · Same-Day Completion',
+    theme:'blue',
+    q: pmNum(sameDayCount)+' work orders closed in 0.0 days in the current view. Are these truly same-day completions, or does the timestamp capture process obscure when work actually started and finished?',
+    data: 'Same-day / 0.0-day closures: '+pmNum(sameDayCount)+' · '+pmPct(sameDayCount,data.length)+'% of work orders'
+  });
+
+  questions.push({
+    id:'a10',
+    category:'Portfolio Control · Filtered View Summary',
+    theme:'blue',
+    q: 'This PM view currently contains '+pmNum(data.length)+' work orders and '+pmMoney(totalSpend)+' of spend. Are the current filters aligned to the management question being asked, and should this discussion focus on a single vendor/community issue or the full portfolio context?',
+    data: pmNum(data.length)+' WOs · '+pmMoney(totalSpend)+' total spend · '+pmNum(validDays.length)+' WOs with close-time data'
+  });
+
+  return questions.slice(0,10);
+}
 var editingQId = null;
 var currentPage = 'dashboard';
 
@@ -1638,7 +1831,8 @@ function initPM() {
     var stored = localStorage.getItem(PM_SK);
     if (stored) customQs = JSON.parse(stored);
   } catch(e) { customQs = []; }
-  renderPMQuestions();
+  refreshAutoQs();
+  renderCustomQs();
 }
 
 // ─── Page switching ───
@@ -1678,6 +1872,10 @@ function qCardHTML(q, idx, isAuto) {
 function renderAutoQs() {
   var el = document.getElementById('pm-auto-list');
   if (!el) return;
+  if (!AUTO_QS.length) {
+    el.innerHTML = '<div class="pm-empty"><div class="pm-empty-icon">&#128202;</div><div class="pm-empty-txt">No auto-generated questions for the current filter view.<br>Adjust filters or refresh the dataset.</div></div>';
+    return;
+  }
   el.innerHTML = AUTO_QS.map(function(q, i) { return qCardHTML(q, i, true); }).join('');
   wireQCardActions(el);
 }
