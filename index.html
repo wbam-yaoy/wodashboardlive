@@ -420,7 +420,7 @@ th.admin-drag .col-drag-handle{display:inline-block}
     <div class="kpi"><div class="kpi-l">Work Orders</div><div class="kpi-v" id="kv-ct">—</div><div class="kpi-s" id="ks-ct"></div></div>
     <div class="kpi"><div class="kpi-l">Total Spend</div><div class="kpi-v" id="kv-sp">—</div><div class="kpi-s" id="ks-sp"></div></div>
     <div class="kpi"><div class="kpi-l">Avg Cost / WO</div><div class="kpi-v" id="kv-av">—</div><div class="kpi-s" id="ks-av"></div></div>
-    <div class="kpi"><div class="kpi-l">Avg Days to Close</div><div class="kpi-v" id="kv-dy">—</div><div class="kpi-s" id="ks-dy"></div></div>
+    <div class="kpi"><div class="kpi-l">Avg Avg Days to Close (Call to Complete)</div><div class="kpi-v" id="kv-dy">—</div><div class="kpi-s" id="ks-dy"></div></div>
     <div class="kpi"><div class="kpi-l">Incurred (Unpaid)</div><div class="kpi-v" id="kv-in">—</div><div class="kpi-s" id="ks-in"></div></div>
   </div>
 
@@ -1042,7 +1042,7 @@ function updKPIs(){
   document.getElementById('ks-sp').textContent=Object.keys(DC).filter(function(k){return sp[k]>0;}).map(function(k){return DC[k].abbr+': '+fmt(sp[k]);}).join(' \u00b7 ');
   document.getElementById('kv-av').textContent=fmt(n?tot/n:0);
   document.getElementById('ks-av').textContent='Across '+n.toLocaleString()+' work orders';
-  document.getElementById('kv-dy').textContent=avgD.toFixed(1);
+  document.getElementById('kv-dy').textContent=avgD.toFixed(2);
   document.getElementById('ks-dy').textContent='Median: '+med(da).toFixed(0)+' days';
   document.getElementById('kv-in').textContent=fmt(inc);
   document.getElementById('ks-in').textContent=incN+' POs pending';
@@ -1246,7 +1246,7 @@ function pickFile(f){
 function tds(v){if(v===null||v===undefined||v==='')return'';if(typeof v==='string'){var s=v.trim();if(!s)return'';if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);var m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);if(m){var yr=m[3].length===2?('20'+m[3]):m[3];return yr+'-'+String(parseInt(m[1],10)).padStart(2,'0')+'-'+String(parseInt(m[2],10)).padStart(2,'0');}var d2=new Date(s);if(!isNaN(d2))return d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');return'';}if(v instanceof Date){return v.getFullYear()+'-'+String(v.getMonth()+1).padStart(2,'0')+'-'+String(v.getDate()).padStart(2,'0');}if(typeof v==='number'){var d=new Date(Math.round((v-25569)*86400*1000));return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}var d3=new Date(v);if(!isNaN(d3))return d3.getFullYear()+'-'+String(d3.getMonth()+1).padStart(2,'0')+'-'+String(d3.getDate()).padStart(2,'0');return'';}
 function monthKey(v){var d=tds(v);var m=d.match(/^(\d{4}-\d{2})/);return m?m[1]:'';}
 function normRows(rows){return(rows||[]).map(function(r){if(!r||typeof r!=='object')return r;r['Call Date']=tds(r['Call Date']);r['PO Incurred Date']=tds(r['PO Incurred Date']);if(r['Repair Completed Date']!==undefined)r['Repair Completed Date']=tds(r['Repair Completed Date']);if(r['PO Total Amount']!==undefined)r['PO Total Amount']=parseFloat((r['PO Total Amount']||'0').toString().replace(/[$,]/g,''))||0;if(r.days_to_complete===undefined||r.days_to_complete===null||r.days_to_complete==='')r.days_to_complete=dbt(r['Call Date'],r['Repair Completed Date']);return r;});}
-function dbt(a,b){if(!a||!b)return 0;try{var d=(new Date(b)-new Date(a))/86400000;return d<0?0:d;}catch(e){return 0;}}
+function dbt(a,b){if(!a||!b)return 0;try{var d=Math.round((new Date(b)-new Date(a))/86400000);return d<0?0:d;}catch(e){return 0;}}
 function fc(H,ns){for(var i=0;i<ns.length;i++){var n=ns[i].toLowerCase();var h=H.find(function(x){return x&&x.toString().toLowerCase().trim()===n;});if(h)return h;}for(var i=0;i<ns.length;i++){var n=ns[i].toLowerCase().split(' ')[0];var h=H.find(function(x){return x&&x.toString().toLowerCase().includes(n);});if(h)return h;}return null;}
 function setP(p){document.getElementById('prog').classList.add('show');document.getElementById('progb').style.width=p+'%';}
 function resolveDivLabel(sd,fn,rows,cdiv){
