@@ -1031,7 +1031,7 @@ function updKPIs(){
   fil.forEach(function(r){
     var am=r['PO Total Amount']||0;n++;tot+=am;
     if(r['PO Status']==='Incurred'){inc+=am;incN++;}
-    if((r.days_to_complete||0)>0)da.push(r.days_to_complete);
+    if(r.days_to_complete !== null && r.days_to_complete !== undefined && r.days_to_complete !== '') da.push(Number(r.days_to_complete));
     var k=lk(r.division);if(k)sp[k]+=am;
   });
   var avgD=da.length?da.reduce(function(s,v){return s+v;},0)/da.length:0;
