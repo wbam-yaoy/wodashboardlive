@@ -1475,7 +1475,7 @@ function renderCell(k, r) {
     case 'category':  return '<td>'+(r['Select Location']||'\u2014')+'</td>';
     case 'amount':    return '<td style="text-align:right;font-weight:600">$'+Math.round(r['PO Total Amount']||0).toLocaleString()+'</td>';
     case 'poid':      return '<td style="font-family:monospace;font-size:11px;color:#555">'+(r['PO ID']||'\u2014')+'</td>';
-    case 'days':      return '<td style="text-align:right">'+((r.days_to_complete||0)>0?r.days_to_complete+'d':'\u2014')+'</td>';
+    case 'days':      return '<td style="text-align:right">'+(r.days_to_complete!=null && r.days_to_complete!=='' ? (Math.floor((Number(r.days_to_complete)||0)*10)/10).toFixed(1)+' days' : '\u2014')+'</td>';
     case 'date':      return '<td>'+(r['Call Date']||'\u2014')+'</td>';
     case 'desc':      return '<td title="'+(r.Description||'')+'" style="color:#777">'+(r.Description||'').slice(0,40)+((r.Description||'').length>40?'\u2026':'')+'</td>';
     default:          return '<td></td>';
