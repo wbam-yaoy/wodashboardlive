@@ -391,7 +391,13 @@ th.admin-drag .col-drag-handle{display:inline-block}
     <option value="last30">Last 30 Days</option>
     <option value="quarter">Quarter</option>
     <option value="ytd">YTD</option>
+    <option value="custom">Custom Range</option>
   </select>
+  <div id="f-custom-dates" style="display:none;align-items:center;gap:8px">
+    <input type="date" id="f-date-start" style="height:30px;padding:0 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;color:var(--ink);background:var(--bg)">
+    <span style="font-size:11px;color:var(--ink3)">to</span>
+    <input type="date" id="f-date-end" style="height:30px;padding:0 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;color:var(--ink);background:var(--bg)">
+  </div>
   <div class="fsep"></div>
   <button type="button" class="btn-rst" id="btn-rst">Reset</button>
   <span class="fcnt" id="fcnt"></span>
@@ -678,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } catch(e) {}
 
   wire();
+  toggleCustomDateInputs();
   wirePM();
   initPM();
 
@@ -885,6 +892,9 @@ function wire(){
   document.getElementById('srch').addEventListener('input',function(){srchStr=this.value.trim();pg=0;applyFilters();});
   document.querySelectorAll('.dtab').forEach(function(t){t.addEventListener('click',function(){toggleTab(t.dataset.key);});});
   ['f-div','f-cat','f-sts','f-time'].forEach(function(id){document.getElementById(id).addEventListener('change',applyFilters);});
+  document.getElementById('f-time').addEventListener('change',toggleCustomDateInputs);
+  document.getElementById('f-date-start').addEventListener('change',function(){pg=0;applyFilters();});
+  document.getElementById('f-date-end').addEventListener('change',function(){pg=0;applyFilters();});
   document.querySelectorAll('th[data-s]').forEach(function(th){th.addEventListener('click',function(){doSort(th.dataset.s);});});
   document.getElementById('mcls').addEventListener('click',closeModal);
   document.getElementById('modal').addEventListener('click',function(e){if(e.target===document.getElementById('modal'))closeModal();});
@@ -1018,7 +1028,13 @@ function pfd(v){
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 function rowFilterDate(r){
-  return pfd(r['Call Date']) || pfd(r['PO Incurred Date']);
+  return pfd(r['PO Incurred Date']) || pfd(r['Call Date']);
+}
+function toggleCustomDateInputs(){
+  var ft=document.getElementById('f-time');
+  var box=document.getElementById('f-custom-dates');
+  if(!ft||!box)return;
+  box.style.display = ft.value==='custom' ? 'flex' : 'none';
 }
 function inDateRange(rng, d){
   if(!rng || !d)return true;
@@ -1033,6 +1049,16 @@ function inDateRange(rng, d){
     start=new Date(today.getFullYear(), qStartMonth, 1);
   }else if(rng==='ytd'){
     start=new Date(today.getFullYear(), 0, 1);
+  }else if(rng==='custom'){
+    var sEl=document.getElementById('f-date-start');
+    var eEl=document.getElementById('f-date-end');
+    start = sEl && sEl.value ? pfd(sEl.value) : null;
+    end = eEl && eEl.value ? pfd(eEl.value) : null;
+    if(!start && !end) return true;
+    if(start && end) return d>=start && d<=end;
+    if(start) return d>=start;
+    if(end) return d<=end;
+    return true;
   }else{
     return true;
   }
@@ -1057,11 +1083,24 @@ function applyFilters(){
     if(s){var h=((r.Address||'')+(r.Vendor||'')+(r.Description||'')+(r['Wo Community']||'')).toLowerCase();if(!h.includes(s))return false;}
     return true;
   });
-  document.getElementById('fcnt').textContent=fil.length+' of '+A.length+' WOs';
+  var ftLbl='';
+  if(ft==='last30')ftLbl=' · Last 30 Days';
+  else if(ft==='quarter')ftLbl=' · Quarter';
+  else if(ft==='ytd')ftLbl=' · YTD';
+  else if(ft==='custom'){
+    var sd=document.getElementById('f-date-start').value;
+    var ed=document.getElementById('f-date-end').value;
+    if(sd||ed)ftLbl=' · '+(sd||'Beginning')+' to '+(ed||'Today');
+    else ftLbl=' · Custom Range';
+  }
+  document.getElementById('fcnt').textContent=fil.length+' of '+A.length+' WOs'+ftLbl;
   pg=0;updKPIs();updCharts();rendTable();refreshAutoQs();
 }
 function resetFilters(){
   ['f-div','f-cat','f-sts','f-time'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('f-date-start').value='';
+  document.getElementById('f-date-end').value='';
+  toggleCustomDateInputs();
   document.getElementById('srch').value='';srchStr='';
   selComs.clear();selVens.clear();
   updMsLabel('com');updMsLabel('ven');
