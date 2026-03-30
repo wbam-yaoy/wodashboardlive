@@ -873,7 +873,7 @@ function showRefreshBanner() {
   var txt = document.getElementById('b-custom-txt');
   var now = new Date();
   var ts  = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-  txt.innerHTML = '<strong>Live data</strong> from — ' +
+  txt.innerHTML = '<strong>Live data</strong> — ' +
     A.length.toLocaleString() + ' records · refreshed ' + ts;
   bc.classList.add('show');
   var clrBtn = document.getElementById('btn-clear');
