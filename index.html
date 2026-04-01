@@ -142,24 +142,6 @@ tr:hover td{background:#fafafa}
 .pb.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pb:disabled{opacity:.3;cursor:not-allowed}
 
-/* ── MODAL ── */
-.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
-.mo.open{display:flex}
-.mbox{background:var(--surface);border-radius:var(--radius-lg);width:520px;max-width:94vw;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
-.mhdr{padding:15px 20px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.mtit{font-size:14px;font-weight:600}
-.mcls{width:25px;height:25px;border:none;background:none;cursor:pointer;color:var(--ink3);font-size:17px;border-radius:4px;display:flex;align-items:center;justify-content:center}
-.mcls:hover{background:var(--bg);color:var(--ink)}
-.mbdy{padding:15px 20px;overflow-y:auto;flex:1}
-.mftr{padding:11px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
-.step{display:none}.step.on{display:block}
-.fg{margin-bottom:13px}
-.fl{display:block;font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
-.fi{width:100%;height:36px;padding:0 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--ink);background:var(--bg)}
-.fi:focus{outline:2px solid var(--north);outline-offset:-1px}
-.ferr{font-size:11px;color:var(--red);margin-top:4px;display:none}
-.ferr.show{display:block}
-
 /* division picker — 2×3 grid */
 .dpick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .dpbtn{padding:8px 6px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:11px;font-weight:500;cursor:pointer;background:var(--bg);color:var(--ink2);text-align:center;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
@@ -206,18 +188,6 @@ tr:hover td{background:#fafafa}
 @media(max-width:1100px){.dcards{grid-template-columns:1fr 1fr}.krow{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:900px){.ctop,.cmid{grid-template-columns:1fr}.main{padding:13px}.fbar{padding:9px 13px}.hdr{padding:0 13px}.div-tabs{display:none}.dcards{grid-template-columns:1fr 1fr}}
 
-/* ── COLUMN DRAG ── */
-th.col-draggable{cursor:grab}
-th.col-draggable.admin-drag{cursor:grab}
-th.col-drag-over{background:rgba(30,95,168,.1);outline:2px solid var(--north);outline-offset:-2px}
-th.col-dragging{opacity:.4;background:rgba(30,95,168,.05)}
-.col-drag-handle{display:none;width:10px;height:12px;margin-right:4px;opacity:.4;flex-shrink:0;cursor:grab;vertical-align:middle}
-th.admin-drag .col-drag-handle{display:inline-block}
-.col-reorder-bar{display:none;align-items:center;gap:10px;padding:7px 17px;background:#fffbeb;border-bottom:1px solid #fde68a;font-size:12px;color:var(--amber)}
-.col-reorder-bar.show{display:flex}
-.col-reorder-bar strong{font-weight:600}
-.col-reorder-bar .crb-reset{margin-left:auto;font-size:11px;font-weight:600;cursor:pointer;background:rgba(180,83,9,.08);border:1px solid #fde68a;border-radius:4px;padding:3px 9px;color:var(--amber)}
-.col-reorder-bar .crb-reset:hover{background:rgba(180,83,9,.14)}
 /* ── MULTI-SELECT ── */
 .ms-wrap{position:relative;flex-shrink:0}
 .ms-btn{height:30px;padding:0 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;color:var(--ink);background:var(--bg);cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:136px;justify-content:space-between}
@@ -240,25 +210,6 @@ th.admin-drag .col-drag-handle{display:inline-block}
 .ms-item.checked{color:var(--ink);font-weight:500}
 .ms-count{display:inline-block;background:var(--north);color:#fff;border-radius:9px;font-size:10px;font-weight:700;padding:0 5px;min-width:16px;text-align:center;margin-left:2px}
 
-/* ══ PAGE SWITCHING ══ */
-.page{display:none}.page.active{display:block}
-/* ══ PM TAB ══ */
-.nav-sep{width:1px;background:rgba(255,255,255,.12);margin:0 6px;flex-shrink:0;align-self:stretch}
-.pm-tab{display:none;align-items:center;gap:6px;padding:0 15px;font-size:12px;font-weight:500;cursor:pointer;color:rgba(255,255,255,.42);border-bottom:3px solid transparent;transition:color .15s;white-space:nowrap;user-select:none}
-.pm-tab.visible{display:flex}.pm-tab:hover{color:rgba(255,255,255,.8)}.pm-tab.on{color:#fff;border-bottom-color:#a78bfa}
-/* ══ PM PAGE ══ */
-.pm-page{max-width:920px;margin:0 auto;padding:28px 28px 60px}
-.pm-phdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;padding-bottom:16px;border-bottom:2px solid var(--ink)}
-.pm-ptitle{font-family:Georgia,serif;font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px}
-.pm-psub{font-size:12px;color:var(--ink3)}
-.pm-pactions{display:flex;gap:8px}
-.pm-btn-add{display:flex;align-items:center;gap:5px;height:32px;padding:0 13px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer}
-.pm-btn-add:hover{background:#27272a}
-.pm-btn-print{height:32px;padding:0 12px;background:var(--surface);color:var(--ink2);border:1px solid var(--border);border-radius:var(--radius);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px}
-.pm-btn-print:hover{background:var(--bg)}
-.pm-sec{margin-bottom:28px}
-.pm-sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);margin-bottom:11px;display:flex;align-items:center;gap:10px}
-.pm-sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
 /* Q CARDS */
 .pmqc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:9px;overflow:hidden;display:grid;grid-template-columns:50px 1fr}
 .pmqc:hover{border-color:#d4d4d8}
@@ -302,7 +253,7 @@ th.admin-drag .col-drag-handle{display:inline-block}
 .qmta{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;background:var(--bg);color:var(--ink);min-height:85px;resize:vertical;font-family:inherit;line-height:1.5}
 .qmsel:focus,.qminp:focus,.qmta:focus{outline:2px solid #1e5fa8;outline-offset:-1px}
 .qmta.sm{min-height:50px}
-@media print{.hdr,.fbar,.banner,.col-reorder-bar{display:none!important}#page-dashboard{display:none!important}#page-pm{display:block!important}.pmqacts,.pm-pactions{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -320,21 +271,12 @@ th.admin-drag .col-drag-handle{display:inline-block}
       <div class="dtab da on" data-key="austin"><span class="pip"></span>Austin</div>
       <div class="dtab dd on" data-key="dallas"><span class="pip"></span>Dallas</div>
     </div>
-    <div class="nav-sep"></div>
-    <div class="pm-tab" id="pm-tab">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      PM Questions
-    </div>
   </div>
   <div class="hdr-right">
     <div class="hdr-info" id="hdr-info">1,251 work orders</div>
     <button type="button" class="btn-up" id="btn-refresh" title="Reload live data from Google Sheets">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
       Refresh Data
-    </button>
-    <button type="button" class="btn-up" id="btn-open" title="Open admin tools">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0A1.65 1.65 0 0 0 10.5 3.1V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Admin
     </button>
   </div>
 </div>
@@ -482,11 +424,6 @@ th.admin-drag .col-drag-handle{display:inline-block}
         <input type="text" class="si" id="srch" placeholder="Search address, vendor, community...">
       </div>
     </div>
-    <div class="col-reorder-bar" id="col-reorder-bar">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l7-7 7 7M5 15l7 7 7-7"/></svg>
-      <strong>Admin mode:</strong> drag column headers to reorder
-      <button type="button" class="crb-reset" id="crb-reset">Reset order</button>
-    </div>
     <div class="twrap">
       <table id="wo-table">
         <thead id="thead"><tr id="thead-row"></tr></thead>
@@ -500,117 +437,6 @@ th.admin-drag .col-drag-handle{display:inline-block}
   </div>
 </div>
 </div><!-- /page-dashboard -->
-
-<!-- PM QUESTIONS PAGE -->
-<div id="page-pm" class="page">
-<div class="pm-page">
-  <div class="pm-phdr">
-    <div>
-      <div class="pm-ptitle">PM Meeting Questions</div>
-      <div class="pm-psub">Auto-generated from live filtered data &nbsp;&middot;&nbsp; Admin only</div>
-    </div>
-    <div class="pm-pactions">
-      <button type="button" class="pm-btn-print" id="pm-btn-print">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Print
-      </button>
-      <button type="button" class="pm-btn-add" id="pm-btn-add">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add Question
-      </button>
-    </div>
-  </div>
-  <div class="pm-sec">
-    <div class="pm-sec-title">Auto-generated &mdash; based on the current filtered view</div>
-    <div id="pm-auto-list"></div>
-  </div>
-  <div class="pm-sec">
-    <div class="pm-sec-title">Custom question bank</div>
-    <div id="pm-custom-list"></div>
-  </div>
-</div>
-</div><!-- /page-pm -->
-
-<!-- Q EDIT MODAL -->
-<div class="qmo" id="qmo">
-  <div class="qmbox">
-    <div class="qmhdr">
-      <span class="qmtit" id="qmtit">Add Question</span>
-      <button type="button" class="qmcls" id="qmcls">&times;</button>
-    </div>
-    <div class="qmbdy">
-      <input type="hidden" id="qm-id">
-      <div class="qmfg"><label class="qmlbl">Category / Topic</label><input type="text" class="qminp" id="qm-cat" placeholder="e.g. Vendor Pricing &middot; Dallas"></div>
-      <div class="qmfg"><label class="qmlbl">Theme Color</label><select class="qmsel" id="qm-theme"><option value="red">Red &mdash; High spend / urgent</option><option value="amber">Amber &mdash; Repeat issues / operations</option><option value="teal">Teal &mdash; Internalization / savings</option><option value="blue">Blue &mdash; Process / oversight</option></select></div>
-      <div class="qmfg"><label class="qmlbl">Question</label><textarea class="qmta" id="qm-q" placeholder="Type your question here..."></textarea></div>
-      <div class="qmfg"><label class="qmlbl">Supporting Data <span style="font-weight:400;opacity:.6">(optional)</span></label><textarea class="qmta sm" id="qm-data" placeholder="e.g. Vendor X: $42,000 across 18 WOs in Q1..."></textarea></div>
-    </div>
-    <div class="qmftr">
-      <button type="button" class="bsec" id="qmcancel">Cancel</button>
-      <button type="button" class="bpri" id="qmsave">Save Question</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL -->
-<div class="mo" id="modal">
-  <div class="mbox">
-    <div class="mhdr">
-      <span class="mtit" id="mtit">Admin &mdash; Upload Data</span>
-      <button type="button" class="mcls" id="mcls">&times;</button>
-    </div>
-    <div class="mbdy">
-      <div class="step on" id="s-auth">
-        <p style="font-size:12px;color:var(--ink2);margin-bottom:13px">Enter the admin password to access admin tools, including uploads and PM Questions.</p>
-        <div class="fg">
-          <label class="fl">Admin Password</label>
-          <input type="password" class="fi" id="pw" placeholder="Enter password" autocomplete="current-password">
-          <div class="ferr" id="pwerr">Incorrect password. Please try again.</div>
-        </div>
-      </div>
-      <div class="step" id="s-up">
-        <div class="fg">
-          <label class="fl">Division</label>
-          <div class="dpick">
-            <div class="dpbtn au sel" id="dp-auto"><span class="dpp" style="background:#6b7280"></span>Auto-detect</div>
-            <div class="dpbtn an" id="dp-north"><span class="dpp" style="background:var(--north)"></span>North Houston</div>
-            <div class="dpbtn as" id="dp-south"><span class="dpp" style="background:var(--south)"></span>South Houston</div>
-            <div class="dpbtn aa" id="dp-austin"><span class="dpp" style="background:var(--austin)"></span>Austin</div>
-            <div class="dpbtn ad" id="dp-dallas"><span class="dpp" style="background:var(--dallas)"></span>Dallas</div>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl">Upload Mode</label>
-          <div class="mrow">
-            <button type="button" class="mbtn on" id="m-rep">Replace division data</button>
-            <button type="button" class="mbtn" id="m-app">Append to existing</button>
-          </div>
-          <div class="mhint" id="mhint">Replaces all existing records for the selected division with the new file.</div>
-        </div>
-        <div class="fg">
-          <label class="fl">Excel File (.xlsx)</label>
-          <div class="dz" id="dz">
-            <input type="file" id="fi" accept=".xlsx,.xls">
-            <div class="dz-ic">&#128194;</div>
-            <div class="dz-t">Drop your Excel file here</div>
-            <div class="dz-s">or click to browse &middot; .xlsx supported</div>
-            <div class="dz-n" id="dz-n"></div>
-          </div>
-        </div>
-        <div class="prog" id="prog"><div class="progb" id="progb"></div></div>
-      </div>
-      <div class="step" id="s-res">
-        <div id="rbanner"></div>
-        <div class="rgrid" id="rgrid"></div>
-        <div class="rdet" id="rdet" style="display:none"></div>
-      </div>
-    </div>
-    <div class="mftr">
-      <button type="button" class="bsec" id="mcnl">Cancel</button>
-      <button type="button" class="bpri" id="mact">Continue</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // ═══ DATA ═══
@@ -685,11 +511,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   wire();
   toggleCustomDateInputs();
-  wirePM();
-  initPM();
 
   // Show loading skeleton, then fetch live data
   showLoadingState();
+  renderThead();
   fetchSheetData();
 });
 
@@ -872,9 +697,8 @@ function showRefreshBanner() {
   var bc  = document.getElementById('b-custom');
   var txt = document.getElementById('b-custom-txt');
   var now = new Date();
-  var ts  = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-  txt.innerHTML = '<strong>Live data</strong> — ' +
-    A.length.toLocaleString() + ' records · refreshed ' + ts;
+  var ts  = now.toLocaleString('en-US', { month:'long', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+  txt.textContent = 'Live data — ' + A.length.toLocaleString() + ' records · Last refreshed: ' + ts;
   bc.classList.add('show');
   var clrBtn = document.getElementById('btn-clear');
   if (clrBtn) {
@@ -886,7 +710,6 @@ function showRefreshBanner() {
 // ═══ WIRE ═══
 function wire(){
   document.getElementById('btn-refresh').addEventListener('click',function(){showLoadingState();fetchSheetData();});
-  document.getElementById('btn-open').addEventListener('click',function(){openModal();});
   document.getElementById('btn-clear').addEventListener('click',function(){showLoadingState();fetchSheetData();});
   document.getElementById('btn-rst').addEventListener('click',resetFilters);
   document.getElementById('srch').addEventListener('input',function(){srchStr=this.value.trim();pg=0;applyFilters();});
@@ -896,32 +719,6 @@ function wire(){
   document.getElementById('f-date-start').addEventListener('change',function(){pg=0;applyFilters();});
   document.getElementById('f-date-end').addEventListener('change',function(){pg=0;applyFilters();});
   document.querySelectorAll('th[data-s]').forEach(function(th){th.addEventListener('click',function(){doSort(th.dataset.s);});});
-  document.getElementById('mcls').addEventListener('click',closeModal);
-  document.getElementById('modal').addEventListener('click',function(e){if(e.target===document.getElementById('modal'))closeModal();});
-  document.getElementById('mcnl').addEventListener('click',closeModal);
-  document.getElementById('mact').addEventListener('click',handleAct);
-  document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')handleAct();});
-  ['auto','north','south','austin','dallas'].forEach(function(k){
-    var el=document.getElementById('dp-'+k);if(el)el.addEventListener('click',function(){setUDiv(k);});
-  });
-  document.getElementById('m-rep').addEventListener('click',function(){setMode('replace');});
-  document.getElementById('m-app').addEventListener('click',function(){setMode('append');});
-  var dz=document.getElementById('dz');
-  dz.addEventListener('click',function(e){if(e.target!==document.getElementById('fi'))document.getElementById('fi').click();});
-  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('ov');});
-  dz.addEventListener('dragleave',function(){dz.classList.remove('ov');});
-  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('ov');var f=e.dataTransfer.files[0];if(f)pickFile(f);});
-  document.getElementById('fi').addEventListener('change',function(e){var f=e.target.files[0];if(f)pickFile(f);});
-  document.querySelectorAll('.dcard-upbtn').forEach(function(b){
-    b.addEventListener('click',function(e){e.stopPropagation();openModal(b.dataset.div);});
-  });
-  document.getElementById('nd-pills').addEventListener('click',function(e){
-    var p=e.target.closest('.nd-pill');if(p)openModal(p.dataset.div);
-  });
-  wireMsDropdown('com');
-  wireMsDropdown('ven');
-  document.addEventListener('click', function() { closeAllMsDropdowns(); });
-  document.getElementById('crb-reset').addEventListener('click', resetColOrder);
 }
 
 // ═══ TABS ═══
@@ -996,10 +793,6 @@ function showCustomBanner(){
 }
 
 // ═══ CLEAR ═══
-function clearData(){
-  showLoadingState();
-  fetchSheetData();
-}
 
 // ═══ FILTERS ═══
 function buildFilters(){rebuildFilters();}
@@ -1249,6 +1042,23 @@ function cPO(){
 }
 
 // ═══ TABLE ═══
+
+function renderThead() {
+  var tr = document.getElementById('thead-row');
+  if (!tr) return;
+  tr.innerHTML = colOrder.map(function(k) {
+    var col = DEFAULT_COLS.find(function(c){return c.key===k;});
+    if (!col) return '';
+    var sortAttr = col.sort ? ' data-s="'+col.sort+'"' : '';
+    var isSorted = col.sort && sortK === col.sort;
+    return '<th'+sortAttr+' data-col="'+k+'"'+(isSorted?' class="sorted"':'')+'>'
+      + col.label + (col.sort ? ' <span class="sa">↕</span>' : '') + '</th>';
+  }).join('');
+  tr.querySelectorAll('th[data-s]').forEach(function(th) {
+    th.addEventListener('click', function() { doSort(th.getAttribute('data-s')); });
+  });
+}
+
 var sd=[];
 var PLBL={'North Houston':'N.Hou','South Houston':'S.Hou','Austin':'Austin','Dallas':'Dallas'};
 var PPILL={'North Houston':'pn','South Houston':'ps','Austin':'pa','Dallas':'pd'};
@@ -1261,8 +1071,6 @@ function rendTable(){
   data.sort(function(a,b){var av=a[sortK],bv=b[sortK];if(typeof av==='string')return sortD*(av||'').localeCompare(bv||'');return sortD*((av||0)-(bv||0));});
   sd=data;var tot=data.length,mx=Math.max(0,Math.ceil(tot/PS)-1);if(pg>mx)pg=mx;
   var sl=data.slice(pg*PS,(pg+1)*PS);
-  // Render thead in current colOrder
-  renderThead();
   document.getElementById('tbody').innerHTML=sl.map(function(r){
     return'<tr>'+colOrder.map(function(k){return renderCell(k,r);}).join('')+'</tr>';
   }).join('');
@@ -1284,189 +1092,6 @@ function rendPag(tot){
   if(pn)pn.addEventListener('click',function(){goP(pg+1);});
 }
 function goP(p){var mx=Math.max(0,Math.ceil(sd.length/PS)-1);pg=Math.max(0,Math.min(p,mx));rendTable();document.querySelector('.tsec').scrollIntoView({behavior:'smooth',block:'start'});}
-
-// ═══ MODAL ═══
-function openModal(pre){
-  curStep='auth';upPreset=pre||null;selDiv='auto';selFile=null;upMode='replace';
-  document.getElementById('pw').value='';document.getElementById('pwerr').classList.remove('show');
-  document.getElementById('dz-n').textContent='';
-  document.getElementById('prog').classList.remove('show');document.getElementById('progb').style.width='0%';
-  setUDiv('auto');setMode('replace');showStep('auth');
-  document.getElementById('modal').classList.add('open');
-  setTimeout(function(){document.getElementById('pw').focus();},80);
-}
-function closeModal(){
-  document.getElementById('modal').classList.remove('open');
-  // Keep admin active until page reload — deactivate only on explicit logout
-}
-function showStep(n){
-  curStep=n;
-  ['auth','up','res'].forEach(function(s){var el=document.getElementById('s-'+s);if(el)el.classList.toggle('on',s===n);});
-  var T={auth:'Admin Access',up:'Admin Tools — Upload Dataset',res:'Upload Complete'};
-  document.getElementById('mtit').textContent=T[n]||'';
-  var fa=document.getElementById('mact'),fc=document.getElementById('mcnl');
-  if(n==='auth'){fc.style.display='';fa.textContent='Continue \u2192';fa.disabled=false;}
-  else if(n==='up'){fc.style.display='';fa.textContent='Upload & Refresh';fa.disabled=!selFile;if(upPreset)setUDiv(upPreset);}
-  else{fc.style.display='none';fa.textContent='Done';fa.disabled=false;}
-}
-function handleAct(){if(curStep==='auth')chkPW();else if(curStep==='up')procFile();else closeModal();}
-function chkPW(){
-  if(document.getElementById('pw').value===PASS){
-    document.getElementById('pwerr').classList.remove('show');
-    activateAdmin();
-    showStep('up');
-  }else{document.getElementById('pwerr').classList.add('show');document.getElementById('pw').select();}
-}
-function setUDiv(k){
-  selDiv=k;
-  ['auto','north','south','austin','dallas'].forEach(function(d){var el=document.getElementById('dp-'+d);if(el)el.classList.toggle('sel',d===k);});
-}
-function setMode(m){
-  upMode=m;document.getElementById('m-rep').classList.toggle('on',m==='replace');document.getElementById('m-app').classList.toggle('on',m==='append');
-  document.getElementById('mhint').textContent=m==='replace'?'Replaces all existing records for the selected division with the new file.':'Adds new records on top of existing data without removing anything.';
-}
-function pickFile(f){
-  if(!f.name.match(/\.xlsx?$/i)){alert('Please select an .xlsx or .xls file.');return;}
-  selFile=f;document.getElementById('dz-n').textContent='\u2713 '+f.name;document.getElementById('mact').disabled=false;
-}
-
-// ═══ PROCESS ═══
-function tds(v){
-  if(v===null||v===undefined||v==='')return'';
-  function pad(n){return String(n).padStart(2,'0');}
-  function fmtDate(d){
-    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-  }
-  function fmtDateTime(d){
-    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
-  }
-  if(typeof v==='string'){
-    var s=v.trim();
-    if(!s)return'';
-
-    // Preserve ISO-style timestamps instead of stripping them to date only
-    if(/^\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?$/.test(s)){
-      return s.replace('T',' ');
-    }
-
-    // Preserve US-style date + optional time
-    var m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:[ ,T]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      var yr=m[3].length===2?('20'+m[3]):m[3];
-      var base=yr+'-'+pad(parseInt(m[1],10))+'-'+pad(parseInt(m[2],10));
-      if(m[4]!==undefined){
-        return base+' '+pad(parseInt(m[4],10))+':'+pad(parseInt(m[5],10))+':'+pad(parseInt(m[6]||'0',10));
-      }
-      return base;
-    }
-
-    var d2=new Date(s);
-    if(!isNaN(d2))return (s.includes(':') ? fmtDateTime(d2) : fmtDate(d2));
-    return'';
-  }
-  if(v instanceof Date){
-    return fmtDateTime(v);
-  }
-  if(typeof v==='number'){
-    var d=new Date(Math.round((v-25569)*86400*1000));
-    return fmtDateTime(d);
-  }
-  var d3=new Date(v);
-  if(!isNaN(d3))return fmtDateTime(d3);
-  return'';
-}
-function monthKey(v){var d=tds(v);var m=d.match(/^(\d{4}-\d{2})/);return m?m[1]:'';}
-function normRows(rows){return(rows||[]).map(function(r){if(!r||typeof r!=='object')return r;r['Call Date']=tds(r['Call Date']);r['PO Incurred Date']=tds(r['PO Incurred Date']);if(r['Repair Completed Date']!==undefined)r['Repair Completed Date']=tds(r['Repair Completed Date']);if(r['PO Total Amount']!==undefined)r['PO Total Amount']=parseFloat((r['PO Total Amount']||'0').toString().replace(/[$,]/g,''))||0;if(r.days_to_complete===undefined||r.days_to_complete===null||r.days_to_complete==='')r.days_to_complete=dbt(r['Call Date'],r['Repair Completed Date']);return r;});}
-function dbt(a,b){if(!a||!b)return 0;try{var d=Math.round((new Date(b)-new Date(a))/86400000);return d<0?0:d;}catch(e){return 0;}}
-function fc(H,ns){for(var i=0;i<ns.length;i++){var n=ns[i].toLowerCase();var h=H.find(function(x){return x&&x.toString().toLowerCase().trim()===n;});if(h)return h;}for(var i=0;i<ns.length;i++){var n=ns[i].toLowerCase().split(' ')[0];var h=H.find(function(x){return x&&x.toString().toLowerCase().includes(n);});if(h)return h;}return null;}
-function setP(p){document.getElementById('prog').classList.add('show');document.getElementById('progb').style.width=p+'%';}
-function resolveDivLabel(sd,fn,rows,cdiv){
-  if(sd==='north')return'North Houston';if(sd==='south')return'South Houston';if(sd==='austin')return'Austin';if(sd==='dallas')return'Dallas';
-  var f=fn.toLowerCase();
-  if(f.includes('north'))return'North Houston';if(f.includes('south'))return'South Houston';if(f.includes('austin'))return'Austin';if(f.includes('dallas'))return'Dallas';
-  if(cdiv&&rows.length&&rows[0][cdiv])return rows[0][cdiv].toString().trim();
-  return null;
-}
-function procFile(){
-  if(!selFile)return;document.getElementById('mact').disabled=true;setP(10);
-  var reader=new FileReader();
-  reader.onerror=function(){showRes('err',0,selFile.name,0,0,0,[],['Failed to read file.']);};
-  reader.onload=function(e){
-    try{
-      setP(40);var wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellDates:true});setP(60);
-      var ws=wb.Sheets[wb.SheetNames[0]];var rows=XLSX.utils.sheet_to_json(ws,{raw:false,defval:''});setP(75);
-      if(!rows.length){showRes('err',0,selFile.name,0,0,0,[],['No data rows found.']);return;}
-      var H=Object.keys(rows[0]);
-      var C={
-        com:fc(H,['Wo Community','Community','WO Community','Property']),
-        ven:fc(H,['Vendor','Vendor Name','Contractor']),
-        loc:fc(H,['Select Location','Location','Category','WO Category']),
-        amt:fc(H,['PO Total Amount','PO Amount','Amount','Total Amount','Cost']),
-        pos:fc(H,['PO Status','Payment Status']),
-        poi:fc(H,['PO ID','PO Number','PO#','Purchase Order ID','Purchase Order Number']),
-        src:fc(H,['Source','WO Source']),
-        pri:fc(H,['Priority']),
-        cd: fc(H,['Call Date','Date','WO Date','Created Date']),
-        pid:fc(H,['PO Incurred Date','Incurred Date','PO Date','Incurred']),
-        rd: fc(H,['Repair Completed Date','Completed Date','Completion Date']),
-        adr:fc(H,['Address','Unit Address','Property Address']),
-        atech:fc(H,['AssignerTech','Assigned Tech','Tech','Technician','Assigner Tech','Assigned Technician']),
-        dsc:fc(H,['Description','WO Description','Notes']),
-        div:fc(H,['Division','Division Name']),
-      };
-      var warns=[];
-      if(!C.com)warns.push('"Wo Community" column not found');
-      if(!C.ven)warns.push('"Vendor" column not found');
-      if(!C.amt)warns.push('"PO Total Amount" not found \u2014 amounts will be $0');
-      if(!C.pid)warns.push('\"PO Incurred Date\" column not found — monthly spend chart will be empty');
-      var fb=resolveDivLabel(selDiv,selFile.name,rows,C.div);
-      if(!fb){fb='North Houston';warns.push('Division auto-detect failed \u2014 defaulted to North Houston.');}
-      var parsed=rows.map(function(row){
-        var cd=tds(row[C.cd]),pid=C.pid?tds(row[C.pid]):'',rd=tds(row[C.rd]);
-        var rowDiv=(C.div&&row[C.div])?row[C.div].toString().trim():fb;
-        return{division:rowDiv||fb,'Wo Community':C.com?(row[C.com]||'').toString().trim()||'Unknown':'Unknown',
-          Vendor:C.ven?(row[C.ven]||'').toString().trim()||'Unknown':'Unknown',
-          'Select Location':C.loc?(row[C.loc]||'Other').toString().trim()||'Other':'Other',
-          'PO Total Amount':C.amt?parseFloat((row[C.amt]||'0').toString().replace(/[$,]/g,''))||0:0,
-          'PO Status':C.pos?(row[C.pos]||'').toString().trim():'',
-          'PO ID':C.poi?(row[C.poi]||'').toString().trim():'',
-          Source:C.src?(row[C.src]||'').toString().trim():'',
-          Priority:C.pri?(row[C.pri]||'\u2014').toString().trim():'\u2014',
-          'Call Date':cd,'PO Incurred Date':pid,days_to_complete:dbt(cd,rd),
-          Address:C.adr?(row[C.adr]||'').toString().trim():'',
-          AssignerTech:C.atech?(row[C.atech]||'').toString().trim():'',
-          Description:C.dsc?(row[C.dsc]||'').toString().slice(0,120).trim():'',Status:''};
-      }).filter(function(r){return r['Wo Community']||r.Vendor;});
-      setP(88);
-      var divsIn=[...new Set(parsed.map(function(r){return r.division;}))];
-      var newA=upMode==='replace'?A.filter(function(r){return!divsIn.includes(r.division);}).concat(parsed):A.concat(parsed);
-      try{localStorage.setItem(SK,JSON.stringify(newA));localStorage.setItem(MK,JSON.stringify({filename:selFile.name,records:newA.length,uploaded:parsed.length,date:new Date().toLocaleDateString()}));}
-      catch(se){warns.push('Could not save to localStorage. Data active this session only.');}
-      A=normRows(newA);detectDWD();
-      parsed.forEach(function(r){var k=lk(r.division);if(k)AD[k]=true;});
-      syncTabs();rebuildFilters();resetFilters();updateCards();updateBanners();showCustomBanner();
-      setP(100);
-      var comms=new Set(parsed.map(function(r){return r['Wo Community'];}));
-      var sp=parsed.reduce(function(s,r){return s+(r['PO Total Amount']||0);},0);
-      setTimeout(function(){showRes('ok',parsed.length,selFile.name,Math.round(sp),comms.size,newA.length,divsIn,warns);},300);
-    }catch(err){console.error(err);showRes('err',0,selFile.name,0,0,0,[],[err.message||'Parse error.']);}
-  };
-  reader.readAsArrayBuffer(selFile);
-}
-function showRes(type,count,fname,spend,comms,total,divs,warns){
-  document.getElementById('rbanner').innerHTML=type==='ok'
-    ?'<div class="rok">\u2713 Imported <strong>'+count.toLocaleString()+' records</strong> from '+fname+'</div>'
-    :'<div class="rerr">\u2717 Failed: '+(warns[0]||'Unknown error')+'</div>';
-  if(type==='ok'){
-    document.getElementById('rgrid').innerHTML='<div class="rs"><div class="rs-l">Records</div><div class="rs-v">'+count.toLocaleString()+'</div></div><div class="rs"><div class="rs-l">Spend</div><div class="rs-v">$'+Math.round(spend).toLocaleString()+'</div></div><div class="rs"><div class="rs-l">Communities</div><div class="rs-v">'+comms+'</div></div><div class="rs"><div class="rs-l">Total records</div><div class="rs-v">'+total.toLocaleString()+'</div></div>';
-    var det=document.getElementById('rdet');
-    det.innerHTML='<strong>Divisions:</strong> '+divs.join(', ')+'<br><strong>Mode:</strong> '+(upMode==='replace'?'Replaced':'Appended')+(warns.length?'<br><strong>Warnings:</strong><br>'+warns.map(function(w){return'\u2022 '+w;}).join('<br>'):'');
-    det.style.display='block';
-  }else{document.getElementById('rgrid').innerHTML='';document.getElementById('rdet').style.display='none';}
-  document.getElementById('mtit').textContent=type==='ok'?'Upload Complete':'Upload Failed';
-  showStep('res');
-}
-
 
 // ═══ MULTI-SELECT HELPERS ═══
 function buildMsList(key, vals) {
@@ -1592,129 +1217,6 @@ function closeAllMsDropdowns() {
 
 
 
-// ═══ COLUMN REORDER ═══
-
-// renderCell: produces a <td> for a given col key and row data
-function renderCell(k, r) {
-  var dp=PPILL[r.division]||'pcl', dl=PLBL[r.division]||r.division;
-  switch(k) {
-    case 'division':  return '<td><span class="pill '+dp+'">'+dl+'</span></td>';
-    case 'community': return '<td title="'+(r['Wo Community']||'')+'">'+(r['Wo Community']||'').slice(0,20)+((r['Wo Community']||'').length>20?'\u2026':'')+'</td>';
-    case 'address':   return '<td title="'+(r.Address||'')+'">'+(r.Address||'').slice(0,22)+((r.Address||'').length>22?'\u2026':'')+'</td>';
-    case 'techassigner': return '<td title="'+(r.AssignerTech||'')+'">'+(r.AssignerTech||'—').slice(0,20)+((r.AssignerTech||'').length>20?'…':'')+'</td>';
-    case 'vendor':    return '<td title="'+(r.Vendor||'')+'">'+(r.Vendor||'').slice(0,20)+((r.Vendor||'').length>20?'…':'')+'</td>';
-    case 'category':  return '<td>'+(r['Select Location']||'\u2014')+'</td>';
-    case 'amount':    return '<td style="text-align:right;font-weight:600">$'+Math.round(r['PO Total Amount']||0).toLocaleString()+'</td>';
-    case 'poid':      return '<td style="font-family:monospace;font-size:11px;color:#555">'+(r['PO ID']||'\u2014')+'</td>';
-    case 'days':      return '<td style="text-align:right">'+(r.days_to_complete!=null && r.days_to_complete!=='' ? (Math.floor((Number(r.days_to_complete)||0)*10)/10).toFixed(1)+' days' : '\u2014')+'</td>';
-    case 'date':      return '<td>'+(r['Call Date']||'\u2014')+'</td>';
-    case 'desc':      return '<td title="'+(r.Description||'')+'" style="color:#777">'+(r.Description||'').slice(0,40)+((r.Description||'').length>40?'\u2026':'')+'</td>';
-    default:          return '<td></td>';
-  }
-}
-
-// renderThead: builds <th> elements in current colOrder, with drag handles if admin
-function renderThead() {
-  var tr = document.getElementById('thead-row');
-  if (!tr) return;
-  tr.innerHTML = colOrder.map(function(k) {
-    var col = DEFAULT_COLS.find(function(c){return c.key===k;});
-    if (!col) return '';
-    var sortAttr = col.sort ? ' data-s="'+col.sort+'"' : '';
-    var isSorted = col.sort && sortK === col.sort;
-    var handleHtml = isAdmin ? '<svg class="col-drag-handle" viewBox="0 0 10 14" fill="currentColor"><circle cx="3" cy="2.5" r="1"/><circle cx="7" cy="2.5" r="1"/><circle cx="3" cy="6.5" r="1"/><circle cx="7" cy="6.5" r="1"/><circle cx="3" cy="10.5" r="1"/><circle cx="7" cy="10.5" r="1"/></svg>' : '';
-    var draggableAttr = isAdmin ? ' draggable="true"' : '';
-    var adminClass = isAdmin ? ' admin-drag col-draggable' : (col.sort ? '' : '');
-    return '<th'+sortAttr+draggableAttr+' data-col="'+k+'" class="'+adminClass+(isSorted?' sorted':'')+'">'
-      + handleHtml + col.label
-      + (col.sort ? ' <span class="sa">\u2195</span>' : '')
-      + '</th>';
-  }).join('');
-
-  // Re-wire sort click on every th with data-s
-  tr.querySelectorAll('th[data-s]').forEach(function(th) {
-    th.addEventListener('click', function(e) {
-      if (e.target.classList.contains('col-drag-handle')) return;
-      doSort(th.getAttribute('data-s'));
-    });
-  });
-
-  // Wire drag events only for admin
-  if (isAdmin) wireDragHandlers();
-}
-
-// ── DRAG STATE ──
-var dragSrcCol = null;
-
-function wireDragHandlers() {
-  var tr = document.getElementById('thead-row');
-  if (!tr) return;
-  tr.querySelectorAll('th[data-col]').forEach(function(th) {
-    th.addEventListener('dragstart', function(e) {
-      dragSrcCol = th.getAttribute('data-col');
-      th.classList.add('col-dragging');
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', dragSrcCol);
-    });
-    th.addEventListener('dragend', function() {
-      th.classList.remove('col-dragging');
-      document.querySelectorAll('.col-drag-over').forEach(function(el){ el.classList.remove('col-drag-over'); });
-      dragSrcCol = null;
-    });
-    th.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      document.querySelectorAll('.col-drag-over').forEach(function(el){ el.classList.remove('col-drag-over'); });
-      if (th.getAttribute('data-col') !== dragSrcCol) th.classList.add('col-drag-over');
-    });
-    th.addEventListener('dragleave', function() {
-      th.classList.remove('col-drag-over');
-    });
-    th.addEventListener('drop', function(e) {
-      e.preventDefault();
-      th.classList.remove('col-drag-over');
-      var targetCol = th.getAttribute('data-col');
-      if (!dragSrcCol || dragSrcCol === targetCol) return;
-      // Reorder colOrder array
-      var srcIdx = colOrder.indexOf(dragSrcCol);
-      var tgtIdx = colOrder.indexOf(targetCol);
-      if (srcIdx < 0 || tgtIdx < 0) return;
-      colOrder.splice(srcIdx, 1);
-      colOrder.splice(tgtIdx, 0, dragSrcCol);
-      // Persist
-      try { localStorage.setItem(COL_ORDER_KEY, JSON.stringify(colOrder)); } catch(e) {}
-      rendTable();
-    });
-  });
-}
-
-// ── ADMIN LOGIN / LOGOUT (reuse password) ──
-// Called right after checkPass() succeeds in the upload modal
-function activateAdmin() {
-  isAdmin = true;
-  document.getElementById('col-reorder-bar').classList.add('show');
-  renderThead();
-  // Reveal PM Questions tab
-  var pmTab = document.getElementById('pm-tab');
-  if (pmTab) pmTab.classList.add('visible');
-}
-
-function deactivateAdmin() {
-  isAdmin = false;
-  document.getElementById('col-reorder-bar').classList.remove('show');
-  renderThead(); // rebuild headers without drag handles
-}
-
-// Reset column order
-function resetColOrder() {
-  colOrder = DEFAULT_COLS.map(function(c){return c.key;});
-  try { localStorage.removeItem(COL_ORDER_KEY); } catch(e) {}
-  rendTable();
-}
-
-
-
-// ═══ PM QUESTIONS ═══
 var PM_SK = 'mfwo_pm_questions';
 var AUTO_QS = [];
 var customQs = [];
